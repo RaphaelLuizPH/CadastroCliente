@@ -1,8 +1,90 @@
 ﻿@page
 @model PrivacyModel
 @{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Política de Privacidade";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="bg-white p-4 rounded-3 shadow-sm border-start border-info border-5">
+            <h1 class="display-6 fw-bold text-info mb-2">
+                <i class="fas fa-shield-alt me-3"></i>@ViewData["Title"]
+            </h1>
+            <p class="text-muted mb-0 fs-5">Saiba como protegemos suas informações pessoais</p>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-10 col-xl-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-info text-white py-3">
+                <h5 class="card-title mb-0 fw-bold">
+                    <i class="fas fa-lock me-2"></i>Nossa Política de Privacidade
+                </h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="row g-4">
+                    <div class="col-12">
+                        <div class="bg-light p-4 rounded-3 border-start border-primary border-3">
+                            <h6 class="text-primary fw-bold mb-3">
+                                <i class="fas fa-info-circle me-2"></i>Coleta de Informações
+                            </h6>
+                            <p class="text-muted mb-0">
+                                Esta página é destinada a detalhar a política de privacidade do site. 
+                                Coletamos apenas as informações necessárias para o funcionamento do sistema de cadastro de fornecedores.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="bg-light p-4 rounded-3 border-start border-success border-3">
+                            <h6 class="text-success fw-bold mb-3">
+                                <i class="fas fa-database me-2"></i>Armazenamento de Dados
+                            </h6>
+                            <p class="text-muted mb-0">
+                                Os dados dos fornecedores são armazenados com segurança em nosso sistema e utilizados exclusivamente para fins comerciais legítimos.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="bg-light p-4 rounded-3 border-start border-warning border-3">
+                            <h6 class="text-warning fw-bold mb-3">
+                                <i class="fas fa-share-alt me-2"></i>Compartilhamento
+                            </h6>
+                            <p class="text-muted mb-0">
+                                Não compartilhamos suas informações pessoais com terceiros sem o seu consentimento explícito, exceto quando exigido por lei.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12">
+                        <div class="bg-light p-4 rounded-3 border-start border-secondary border-3">
+                            <h6 class="text-secondary fw-bold mb-3">
+                                <i class="fas fa-envelope me-2"></i>Contato
+                            </h6>
+                            <p class="text-muted mb-0">
+                                Para dúvidas sobre nossa política de privacidade ou para exercer seus direitos relacionados aos dados pessoais, 
+                                entre em contato conosco através dos canais oficiais da empresa.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <div class="alert alert-info border-0 shadow-sm">
+                        <i class="fas fa-calendar-alt me-2"></i>
+                        <strong>Última atualização:</strong> Janeiro de 2025
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="/" class="btn btn-primary btn-lg shadow-sm">
+                <i class="fas fa-home me-2"></i>Voltar ao Início
+            </a>
+        </div>
+    </div>
+</div>

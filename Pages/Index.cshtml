@@ -1,10 +1,115 @@
 ﻿@page
-@model IndexModel
+@using CadastroCliente.Pages.Shared
+@model CadastroCliente.Pages.Fornecedores.IndexModel
+
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Fornecedores";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center bg-white p-4 rounded-3 shadow-sm border-start border-primary border-5">
+            <div>
+                <h1 class="display-6 fw-bold text-primary mb-2">
+                    <i class="fas fa-users me-3"></i>Fornecedores
+                </h1>
+                <p class="text-muted mb-0 fs-5">Gerencie seus fornecedores cadastrados</p>
+            </div>
+            <div>
+                <a asp-page="Create" class="btn btn-success btn-lg shadow-sm">
+                    <i class="fas fa-plus me-2"></i>Novo Fornecedor
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white py-3">
+                <h5 class="card-title mb-0 fw-bold">
+                    <i class="fas fa-list me-2"></i>Lista de Fornecedores
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="fw-bold text-primary px-4 py-3">
+                                    <i class="fas fa-user me-2"></i>@Html.DisplayNameFor(model => model.Fornecedor[0].Nome)
+                                </th>
+                                <th class="fw-bold text-primary px-4 py-3">
+                                    <i class="fas fa-id-card me-2"></i>@Html.DisplayNameFor(model => model.Fornecedor[0].Cnpj)
+                                </th>
+                                <th class="fw-bold text-primary px-4 py-3">
+                                    <i class="fas fa-industry me-2"></i>@Html.DisplayNameFor(model => model.Fornecedor[0].Segmento)
+                                </th>
+                                <th class="fw-bold text-primary px-4 py-3">
+                                    <i class="fas fa-map-pin me-2"></i>@Html.DisplayNameFor(model => model.Fornecedor[0].Cep)
+                                </th>
+                                <th class="fw-bold text-primary px-4 py-3">
+                                    <i class="fas fa-home me-2"></i>@Html.DisplayNameFor(model => model.Fornecedor[0].Endereco)
+                                </th>
+                                <th class="fw-bold text-primary px-4 py-3">
+                                    <i class="fas fa-image me-2"></i>@Html.DisplayNameFor(model => model.Fornecedor[0].Foto)
+                                </th>
+                                <th class="fw-bold text-primary px-4 py-3 text-center">
+                                    <i class="fas fa-cogs me-2"></i>Ações
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Fornecedor) {
+                                <tr class="align-middle">
+                                    <td class="px-4 py-3">
+                                        <span class="fw-medium">@Html.DisplayFor(modelItem => item.Nome)</span>
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <span class="badge bg-secondary fs-6">@Html.DisplayFor(modelItem => item.Cnpj)</span>
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <span class="badge bg-info text-dark fs-6">@Html.DisplayFor(modelItem => item.Segmento)</span>
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        @Html.DisplayFor(modelItem => item.Cep)
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <small class="text-muted">@Html.DisplayFor(modelItem => item.Endereco)</small>
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        @if (item.Foto != null && item.Foto.Length > 0)
+                                        {
+                                            var dataUrl = ImageHelper.GetImage(item.Foto);
+                                            <img src="@dataUrl" alt="Foto" class="rounded-circle border border-2 border-primary shadow-sm" style="width: 60px; height: 60px; object-fit: cover;" />
+                                        }
+                                        else
+                                        {
+                                            <div class="bg-light rounded-circle d-flex align-items-center justify-content-center border border-2 border-secondary" style="width: 60px; height: 60px;">
+                                                <i class="fas fa-image text-muted"></i>
+                                            </div>
+                                        }
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <div class="btn-group" role="group">
+                                            <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-outline-warning btn-sm">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,0 +1,128 @@
+﻿@page
+@using CadastroCliente.Pages.Shared
+@model CadastroCliente.Pages.Fornecedores.DetailsModel
+
+@{
+    ViewData["Title"] = "Detalhes do Fornecedor";
+}
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="bg-white p-4 rounded-3 shadow-sm border-start border-info border-5">
+            <h1 class="display-6 fw-bold text-info mb-2">
+                <i class="fas fa-info-circle me-3"></i>Detalhes do Fornecedor
+            </h1>
+            <p class="text-muted mb-0 fs-5">Visualize as informações completas do fornecedor</p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-info text-white py-3">
+                <h5 class="card-title mb-0 fw-bold">
+                    <i class="fas fa-user me-2"></i>Informações do Fornecedor
+                </h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="bg-light p-3 rounded-3 border-start border-primary border-3">
+                            <dt class="text-primary fw-bold mb-2">
+                                <i class="fas fa-user me-2"></i>@Html.DisplayNameFor(model => model.Fornecedor.Nome)
+                            </dt>
+                            <dd class="fs-5 fw-medium text-dark mb-0">
+                                @Html.DisplayFor(model => model.Fornecedor.Nome)
+                            </dd>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="bg-light p-3 rounded-3 border-start border-secondary border-3">
+                            <dt class="text-secondary fw-bold mb-2">
+                                <i class="fas fa-id-card me-2"></i>@Html.DisplayNameFor(model => model.Fornecedor.Cnpj)
+                            </dt>
+                            <dd class="fs-5 fw-medium text-dark mb-0">
+                                <span class="badge bg-secondary fs-6">@Html.DisplayFor(model => model.Fornecedor.Cnpj)</span>
+                            </dd>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="bg-light p-3 rounded-3 border-start border-success border-3">
+                            <dt class="text-success fw-bold mb-2">
+                                <i class="fas fa-industry me-2"></i>@Html.DisplayNameFor(model => model.Fornecedor.Segmento)
+                            </dt>
+                            <dd class="fs-5 fw-medium text-dark mb-0">
+                                <span class="badge bg-success fs-6">@Html.DisplayFor(model => model.Fornecedor.Segmento)</span>
+                            </dd>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="bg-light p-3 rounded-3 border-start border-warning border-3">
+                            <dt class="text-warning fw-bold mb-2">
+                                <i class="fas fa-map-pin me-2"></i>@Html.DisplayNameFor(model => model.Fornecedor.Cep)
+                            </dt>
+                            <dd class="fs-5 fw-medium text-dark mb-0">
+                                @Html.DisplayFor(model => model.Fornecedor.Cep)
+                            </dd>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="bg-light p-3 rounded-3 border-start border-info border-3">
+                            <dt class="text-info fw-bold mb-2">
+                                <i class="fas fa-home me-2"></i>@Html.DisplayNameFor(model => model.Fornecedor.Endereco)
+                            </dt>
+                            <dd class="fs-5 fw-medium text-dark mb-0">
+                                @Html.DisplayFor(model => model.Fornecedor.Endereco)
+                            </dd>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-primary text-white py-3">
+                <h5 class="card-title mb-0 fw-bold">
+                    <i class="fas fa-image me-2"></i>Foto do Fornecedor
+                </h5>
+            </div>
+            <div class="card-body p-4 d-flex align-items-center justify-content-center">
+                @if (Model.Fornecedor.Foto != null && Model.Fornecedor.Foto.Length > 0)
+                {
+                    var data = ImageHelper.GetImage(Model.Fornecedor.Foto);
+                    <div class="text-center">
+                        <img src="@data"
+                             alt="Foto do Fornecedor"
+                             class="img-fluid rounded-3 shadow border border-3 border-primary"
+                             style="max-width: 100%; max-height: 300px; object-fit: cover;" />
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-5">
+                        <div class="bg-light rounded-3 p-4 border border-2 border-dashed">
+                            <i class="fas fa-image text-muted" style="font-size: 4rem;"></i>
+                            <p class="text-muted mt-3 mb-0 fw-medium">Nenhuma imagem disponível</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="d-flex gap-3 justify-content-center">
+            <a asp-page="./Edit" asp-route-id="@Model.Fornecedor.Id" class="btn btn-warning btn-lg shadow-sm">
+                <i class="fas fa-edit me-2"></i>Editar
+            </a>
+            <a asp-page="./Index" class="btn btn-secondary btn-lg shadow-sm">
+                <i class="fas fa-arrow-left me-2"></i>Voltar à Lista
+            </a>
+        </div>
+    </div>
+</div>

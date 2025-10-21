@@ -1,26 +1,61 @@
 ﻿@page
 @model ErrorModel
 @{
-    ViewData["Title"] = "Error";
+    ViewData["Title"] = "Erro";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-6">
+        <div class="text-center py-5">
+            <div class="bg-white rounded-3 shadow p-5 border-start border-danger border-5">
+                <div class="mb-4">
+                    <i class="fas fa-exclamation-triangle text-danger" style="font-size: 5rem;"></i>
+                </div>
+                
+                <h1 class="display-5 fw-bold text-danger mb-3">Oops! Algo deu errado</h1>
+                <h2 class="h4 text-muted mb-4">Ocorreu um erro ao processar sua solicitação.</h2>
 
-@if (Model.ShowRequestId)
-{
-    <p>
-        <strong>Request ID:</strong> <code>@Model.RequestId</code>
-    </p>
-}
+                @if (Model.ShowRequestId)
+                {
+                    <div class="alert alert-light border border-2 border-secondary rounded-3 mb-4">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-info-circle text-secondary me-3"></i>
+                            <div>
+                                <strong class="text-secondary">ID da Solicitação:</strong>
+                                <code class="bg-secondary text-white px-2 py-1 rounded ms-2">@Model.RequestId</code>
+                            </div>
+                        </div>
+                    </div>
+                }
 
-<h3>Development Mode</h3>
-<p>
-    Swapping to the <strong>Development</strong> environment displays detailed information about the error that occurred.
-</p>
-<p>
-    <strong>The Development environment shouldn't be enabled for deployed applications.</strong>
-    It can result in displaying sensitive information from exceptions to end users.
-    For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
-    and restarting the app.
-</p>
+                <div class="bg-light rounded-3 p-4 mb-4 text-start">
+                    <h5 class="text-primary fw-bold mb-3">
+                        <i class="fas fa-code me-2"></i>Modo de Desenvolvimento
+                    </h5>
+                    <p class="text-muted mb-3">
+                        Alternar para o ambiente de <strong>Desenvolvimento</strong> exibe informações detalhadas sobre o erro que ocorreu.
+                    </p>
+                    <div class="alert alert-warning border-0 shadow-sm">
+                        <i class="fas fa-shield-alt me-2"></i>
+                        <strong>O ambiente de Desenvolvimento não deve ser habilitado para aplicações em produção.</strong>
+                        Pode resultar na exibição de informações sensíveis de exceções para usuários finais.
+                    </div>
+                    <p class="text-muted mb-0">
+                        Para depuração local, habilite o ambiente de <strong>Desenvolvimento</strong> definindo a variável de ambiente 
+                        <code class="bg-secondary text-white px-2 py-1 rounded">ASPNETCORE_ENVIRONMENT</code> como 
+                        <code class="bg-secondary text-white px-2 py-1 rounded">Development</code> e reiniciando a aplicação.
+                    </p>
+                </div>
+
+                <div class="d-flex gap-3 justify-content-center">
+                    <a href="/" class="btn btn-primary btn-lg shadow-sm">
+                        <i class="fas fa-home me-2"></i>Voltar ao Início
+                    </a>
+                    <button onclick="history.back()" class="btn btn-secondary btn-lg shadow-sm">
+                        <i class="fas fa-arrow-left me-2"></i>Página Anterior
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

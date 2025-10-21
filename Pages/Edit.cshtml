@@ -1,0 +1,117 @@
+﻿@page
+@model CadastroCliente.Pages.Fornecedores.EditModel
+
+@{
+    ViewData["Title"] = "Editar Fornecedor";
+}
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="bg-white p-4 rounded-3 shadow-sm border-start border-warning border-5">
+            <h1 class="display-6 fw-bold text-warning mb-2">
+                <i class="fas fa-edit me-3"></i>Editar Fornecedor
+            </h1>
+            <p class="text-muted mb-0 fs-5">Atualize as informações do fornecedor</p>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-xl-8 col-lg-10">
+        <div class="card shadow border-0">
+            <div class="card-header bg-warning text-dark py-3">
+                <h5 class="card-title mb-0 fw-bold">
+                    <i class="fas fa-user-edit me-2"></i>Dados do Fornecedor
+                </h5>
+            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3 border-0 shadow-sm" role="alert">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                    </div>
+                    
+                    <input type="hidden" asp-for="Fornecedor.Id" />
+                    
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="Fornecedor.Nome" class="form-control border-2 border-primary" placeholder="Nome do Fornecedor" />
+                                <label asp-for="Fornecedor.Nome" class="text-primary fw-medium">
+                                    <i class="fas fa-user me-2"></i>Nome do Fornecedor
+                                </label>
+                                <span asp-validation-for="Fornecedor.Nome" class="text-danger fw-medium mt-1 d-block"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="Fornecedor.Cnpj" class="form-control border-2 border-secondary" placeholder="CNPJ" />
+                                <label asp-for="Fornecedor.Cnpj" class="text-secondary fw-medium">
+                                    <i class="fas fa-id-card me-2"></i>CNPJ
+                                </label>
+                                <span asp-validation-for="Fornecedor.Cnpj" class="text-danger fw-medium mt-1 d-block"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="Fornecedor.Segmento" class="form-control border-2 border-info" placeholder="Segmento" />
+                                <label asp-for="Fornecedor.Segmento" class="text-info fw-medium">
+                                    <i class="fas fa-industry me-2"></i>Segmento
+                                </label>
+                                <span asp-validation-for="Fornecedor.Segmento" class="text-danger fw-medium mt-1 d-block"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="Fornecedor.Cep" class="form-control border-2 border-warning" placeholder="CEP" />
+                                <label asp-for="Fornecedor.Cep" class="text-warning fw-medium">
+                                    <i class="fas fa-map-pin me-2"></i>CEP
+                                </label>
+                                <span asp-validation-for="Fornecedor.Cep" class="text-danger fw-medium mt-1 d-block"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input asp-for="Fornecedor.Endereco" class="form-control border-2 border-success" placeholder="Endereço Completo" />
+                                <label asp-for="Fornecedor.Endereco" class="text-success fw-medium">
+                                    <i class="fas fa-home me-2"></i>Endereço Completo
+                                </label>
+                                <span asp-validation-for="Fornecedor.Endereco" class="text-danger fw-medium mt-1 d-block"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <div class="border border-2 border-primary rounded-3 p-4 bg-light">
+                                <label class="form-label text-primary fw-bold mb-3">
+                                    <i class="fas fa-camera me-2"></i>Foto do Fornecedor
+                                </label>
+                                <div class="alert alert-info border-0 shadow-sm">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    <strong>Nota:</strong> Para alterar a foto, você precisará usar a funcionalidade de criação de um novo registro.
+                                </div>
+                                <input asp-for="Fornecedor.Foto" type="hidden" />
+                                <span asp-validation-for="Fornecedor.Foto" class="text-danger fw-medium mt-2 d-block"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex gap-3 justify-content-center mt-5">
+                        <button type="submit" class="btn btn-warning btn-lg shadow-sm px-5 text-dark fw-bold">
+                            <i class="fas fa-save me-2"></i>Salvar Alterações
+                        </button>
+                        <a asp-page="./Index" class="btn btn-secondary btn-lg shadow-sm px-5">
+                            <i class="fas fa-arrow-left me-2"></i>Voltar à Lista
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
