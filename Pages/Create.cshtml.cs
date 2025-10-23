@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.IO;
-using Microsoft.AspNetCore.Http;
+﻿using CadastroCliente.Model.Fornecedor;
+using CadastroCliente.Pages.Shared;
+using CadastroCliente.Service.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using CadastroCliente.Model.Fornecedor;
-using CadastroCliente.Service.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace CadastroCliente.Pages
 {
     public class CreateModel : PageModel
     {
         private readonly DatabaseContext _context;
+        public readonly ImageHelper _helper;
 
-        public CreateModel(DatabaseContext context)
+        public CreateModel(DatabaseContext context, ImageHelper imageHelper)
         {
             _context = context;
+            _helper = imageHelper;
         }
 
         public IActionResult OnGet()
@@ -41,12 +38,28 @@ namespace CadastroCliente.Pages
                 return Page();
             }
 
+            if (await _context.Fornecedores.AnyAsync(f => f.Cnpj == Fornecedor.Cnpj))
+            {
+                ModelState.AddModelError("Fornecedor.Cnpj", "Este CNPJ já está cadastrado no sistema.");
+                return Page();
+            };
+
+
+
+
             if (Foto != null && Foto.Length > 0)
             {
-                using var ms = new MemoryStream();
-                await Foto.CopyToAsync(ms);
-                Fornecedor.Foto = ms.ToArray();
+               
+                var filename = $"{Guid.NewGuid()}{Path.GetExtension(Foto.FileName)}";
+                Fornecedor.FotoUrl = filename;
+                await _helper.UploadImage(Foto, filename);
             }
+
+
+         
+
+
+
 
             _context.Fornecedores.Add(Fornecedor);
             await _context.SaveChangesAsync();

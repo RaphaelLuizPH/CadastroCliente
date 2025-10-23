@@ -20,7 +20,7 @@ namespace CadastroCliente.Service.Database
             modelBuilder.Entity<Fornecedor>().Property(f => f.Endereco).HasMaxLength(255).IsRequired();
             modelBuilder.Entity<Fornecedor>().Property(f => f.Nome).HasMaxLength(100).IsRequired();
             modelBuilder.Entity<Fornecedor>().Property(f => f.Cep).HasMaxLength(8).IsFixedLength().IsRequired();
-
+            modelBuilder.Entity<Fornecedor>().Property(f => f.Segmento).HasConversion<string>();
             modelBuilder.Entity<Fornecedor>().HasAlternateKey(f => f.Cnpj);
 
 

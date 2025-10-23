@@ -8,20 +8,26 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CadastroCliente.Model.Fornecedor;
 using CadastroCliente.Service.Database;
+using CadastroCliente.Pages.Shared;
 
 namespace CadastroCliente.Pages.Fornecedores
 {
     public class EditModel : PageModel
     {
         private readonly DatabaseContext _context;
+        public readonly ImageHelper _helper;
 
-        public EditModel(DatabaseContext context)
+        public EditModel(DatabaseContext context, ImageHelper imageHelper)
         {
             _context = context;
+            _helper = imageHelper;
         }
 
         [BindProperty]
         public Fornecedor Fornecedor { get; set; } = default!;
+
+        [BindProperty]
+        public IFormFile? Foto { get; set; }
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -29,6 +35,8 @@ namespace CadastroCliente.Pages.Fornecedores
             {
                 return NotFound();
             }
+
+
 
             var fornecedor =  await _context.Fornecedores.FirstOrDefaultAsync(m => m.Id == id);
             if (fornecedor == null)
@@ -41,19 +49,49 @@ namespace CadastroCliente.Pages.Fornecedores
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(Guid? id)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            _context.Attach(Fornecedor).State = EntityState.Modified;
-
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return Page();
+                }
+
+                if (await _context.Fornecedores.AnyAsync(f => f.Cnpj == Fornecedor.Cnpj && f.Id != Fornecedor.Id))
+                {
+                    ModelState.AddModelError("Fornecedor.Cnpj", "Este CNPJ já está cadastrado no sistema.");
+                    return Page();
+                }
+                ;
+
+
+                var existing = await _context.Fornecedores.FirstOrDefaultAsync(f => f.Id == Fornecedor.Id);
+                if (existing == null)
+                {
+                    return NotFound();
+                }
+
+                existing.Nome = Fornecedor.Nome;
+                existing.Segmento = Fornecedor.Segmento;
+                existing.Cep = Fornecedor.Cep;
+                existing.Endereco = Fornecedor.Endereco;
+
+
+                if (Foto is not null && Foto.Length > 0)
+                {
+                    var filename = $"{Guid.NewGuid()}{Path.GetExtension(Foto.FileName)}";
+                    await _helper.ReplaceImage(Foto, filename);
+                    existing.FotoUrl = filename;
+                }
+
                 await _context.SaveChangesAsync();
+
+
+
+
             }
+           
             catch (DbUpdateConcurrencyException)
             {
                 if (!FornecedorExists(Fornecedor.Id))
@@ -64,6 +102,11 @@ namespace CadastroCliente.Pages.Fornecedores
                 {
                     throw;
                 }
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
             }
 
             return RedirectToPage("./Index");

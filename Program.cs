@@ -1,4 +1,6 @@
+using CadastroCliente.Pages.Shared;
 using CadastroCliente.Service.Database;
+using CadastroCliente.Service.Storage;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
+
+builder.Services.AddScoped<ImageHelper>();
+
+builder.Services.AddScoped<StorageService>(sp =>
+{
+
+    var connectionString = builder.Configuration["ConnectionStrings:BlobStorageConnection"]!;
+    var accountKey = builder.Configuration["BlobAccKey"]!;
+    return new StorageService(connectionString, accountKey);
+});
 
 builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))

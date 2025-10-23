@@ -1,22 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CadastroCliente.Model.Fornecedor;
+using CadastroCliente.Pages.Shared;
+using CadastroCliente.Service.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using CadastroCliente.Model.Fornecedor;
-using CadastroCliente.Service.Database;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CadastroCliente.Pages
 {
     public class DeleteModel : PageModel
     {
         private readonly DatabaseContext _context;
+        public readonly ImageHelper _helper;
 
-        public DeleteModel(DatabaseContext context)
+        public DeleteModel(DatabaseContext context, ImageHelper imageHelper)
         {
             _context = context;
+            _helper = imageHelper;
         }
 
         [BindProperty]

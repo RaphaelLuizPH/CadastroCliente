@@ -11,7 +11,7 @@
             <h1 class="display-6 fw-bold text-warning mb-2">
                 <i class="fas fa-edit me-3"></i>Editar Fornecedor
             </h1>
-            <p class="text-muted mb-0 fs-5">Atualize as informações do fornecedor</p>
+            <p class="text-secondary mb-0 fs-5">Atualize as informações do fornecedor</p>
         </div>
     </div>
 </div>
@@ -25,7 +25,7 @@
                 </h5>
             </div>
             <div class="card-body p-4">
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-3 border-0 shadow-sm" role="alert">
                         <i class="fas fa-exclamation-triangle me-2"></i>
                     </div>
@@ -35,7 +35,7 @@
                     <div class="row g-4">
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input asp-for="Fornecedor.Nome" class="form-control border-2 border-primary" placeholder="Nome do Fornecedor" />
+                                <input asp-for="Fornecedor.Nome" class="form-control" placeholder="Nome do Fornecedor" />
                                 <label asp-for="Fornecedor.Nome" class="text-primary fw-medium">
                                     <i class="fas fa-user me-2"></i>Nome do Fornecedor
                                 </label>
@@ -45,8 +45,8 @@
                         
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input asp-for="Fornecedor.Cnpj" class="form-control border-2 border-secondary" placeholder="CNPJ" />
-                                <label asp-for="Fornecedor.Cnpj" class="text-secondary fw-medium">
+                                <input asp-for="Fornecedor.Cnpj" class="form-control" placeholder="CNPJ" readonly/>
+                                <label asp-for="Fornecedor.Cnpj" class="text-primary fw-medium">
                                     <i class="fas fa-id-card me-2"></i>CNPJ
                                 </label>
                                 <span asp-validation-for="Fornecedor.Cnpj" class="text-danger fw-medium mt-1 d-block"></span>
@@ -55,8 +55,10 @@
                         
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input asp-for="Fornecedor.Segmento" class="form-control border-2 border-info" placeholder="Segmento" />
-                                <label asp-for="Fornecedor.Segmento" class="text-info fw-medium">
+                                <select asp-for="Fornecedor.Segmento" asp-items="Html.GetEnumSelectList<CadastroCliente.Model.Fornecedor.Segmento>()" class="form-select">
+                                    <option value="">Selecione um segmento</option>
+                                </select>
+                                <label asp-for="Fornecedor.Segmento" class="text-primary fw-medium">
                                     <i class="fas fa-industry me-2"></i>Segmento
                                 </label>
                                 <span asp-validation-for="Fornecedor.Segmento" class="text-danger fw-medium mt-1 d-block"></span>
@@ -65,8 +67,8 @@
                         
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input asp-for="Fornecedor.Cep" class="form-control border-2 border-warning" placeholder="CEP" />
-                                <label asp-for="Fornecedor.Cep" class="text-warning fw-medium">
+                                <input asp-for="Fornecedor.Cep" class="form-control" placeholder="CEP" />
+                                <label asp-for="Fornecedor.Cep" class="text-primary fw-medium">
                                     <i class="fas fa-map-pin me-2"></i>CEP
                                 </label>
                                 <span asp-validation-for="Fornecedor.Cep" class="text-danger fw-medium mt-1 d-block"></span>
@@ -75,8 +77,8 @@
                         
                         <div class="col-12">
                             <div class="form-floating">
-                                <input asp-for="Fornecedor.Endereco" class="form-control border-2 border-success" placeholder="Endereço Completo" />
-                                <label asp-for="Fornecedor.Endereco" class="text-success fw-medium">
+                                <input asp-for="Fornecedor.Endereco" class="form-control" placeholder="Endereço Completo" readonly/>
+                                <label asp-for="Fornecedor.Endereco" class="text-primary fw-medium">
                                     <i class="fas fa-home me-2"></i>Endereço Completo
                                 </label>
                                 <span asp-validation-for="Fornecedor.Endereco" class="text-danger fw-medium mt-1 d-block"></span>
@@ -88,12 +90,18 @@
                                 <label class="form-label text-primary fw-bold mb-3">
                                     <i class="fas fa-camera me-2"></i>Foto do Fornecedor
                                 </label>
-                                <div class="alert alert-info border-0 shadow-sm">
-                                    <i class="fas fa-info-circle me-2"></i>
-                                    <strong>Nota:</strong> Para alterar a foto, você precisará usar a funcionalidade de criação de um novo registro.
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-upload text-primary" style="font-size: 2rem;"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <input asp-for="Foto" type="file" class="form-control form-control-lg" id="Foto" name="Foto" accept="image/*" />
+                                        <div class="form-text text-secondary mt-2">
+                                            <i class="fas fa-info-circle me-1"></i>Selecione uma imagem para o fornecedor
+                                        </div>
+                                    </div>
                                 </div>
-                                <input asp-for="Fornecedor.Foto" type="hidden" />
-                                <span asp-validation-for="Fornecedor.Foto" class="text-danger fw-medium mt-2 d-block"></span>
+                                <span asp-validation-for="Fornecedor.FotoUrl" class="text-danger fw-medium mt-2 d-block"></span>
                             </div>
                         </div>
                     </div>
@@ -112,6 +120,32 @@
     </div>
 </div>
 
-@section Scripts {
+@section Scripts { 
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cepInput = document.querySelector('input[name="Fornecedor.Cep"]');
+            
+            if (cepInput) {
+                
+                cepInput.addEventListener('input', function() {
+                    const cep = this.value.replace(/\D/g, ''); 
+                 
+                        BuscarCEP(cep);
+                    
+                });
+                
+                
+                cepInput.addEventListener('blur', function() {
+                    const cep = this.value.replace(/\D/g, ''); 
+                    if (cep.length === 8) {
+                        BuscarCEP(cep);
+                    }
+                });
+            }
+        });
+    </script>
+
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
